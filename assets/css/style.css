@@ -1,0 +1,14 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url("../images/background.png");
+}
+
+.card {
+    opacity: .8;
+    margin: 10px auto;
+    padding: 10px;
+    position: absolute;
+}
