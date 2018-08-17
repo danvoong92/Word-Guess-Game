@@ -1,5 +1,5 @@
 //Organize javascript sheet to avoid confusion and headache
-
+//Reference *new* terms when using new methods of javascript
 //==============================================================
 //List all of my global variables here
 
@@ -9,7 +9,7 @@ var wordBank = [
     "brazil", "russia", "taiwan", "newzealand", "egypt",
     "mongolia", "romania", "madagascar", "libya", "spain"
 ];
-var selectedWord = "";
+var wordChoice;
 var lettersinWord = [];
 var numBlanks = 0;
 var correctLetterGuessed = [];
@@ -22,56 +22,51 @@ var lossCount = 0;
 //List all of my functions here
 
 function gameStart() {
-    selectedWord = wordBank[Math.floor(Math.random() * wordBank.length)];
-    lettersinWord = selectedWord.split("");
+    wordChoice = wordBank[Math.floor(Math.random() * wordBank.length)];
+    lettersinWord = wordChoice.split(""); //*new* split method 'splits' string into substrings and return as array, used here to split each word into letters; "" hides commas
     numBlanks = lettersinWord.length;
 
-    console.log(selectedWord);
-    console.log(lettersinWord);
-    console.log(numBlanks);
-    
     guessesRemaining = 10;
     wrongLettersGuessed = [];
     correctLetterGuessed = [];
 
     for (var i=0; i<numBlanks; i++) {
-        correctLetterGuessed.push("_");
+        correctLetterGuessed.push("_"); //*new* push method allows letters to replace '_' when letter is correctly guessed
     }
 
-
-    document.getElementById("currentWord").innerHTML = correctLetterGuessed.join(" ");
+    document.getElementById("currentWord").innerHTML = correctLetterGuessed.join(" "); //*new* join method combines all elements of array and returns as a string... " " makes it so the commas do not appear on screen
     document.getElementById("numGuesses").innerHTML = guessesRemaining;
     document.getElementById("numWins").innerHTML = winCount;
     document.getElementById("numLosses").innerHTML = lossCount;
 
-    console.log(selectedWord);
-    console.log(lettersinWord);
-    console.log(numBlanks);
+    //Debugging checkpoint
+
+    //console.log(wordChoice);
+    //console.log(lettersinWord);
+    //console.log(numBlanks);
+    //console.log(correctLetterGuessed);
 }
 
 function checkLetters(letter) {
-    alert("You guessed the letter: " + letter + ".");
-    var isLetterInWord = false;
+    
+    var correctLetter = false;
     
     for (var i = 0; i < numBlanks; i++) {
-        if(selectedWord[i] == letter) {
-            isLetterInWord = true;
-            
+        if(wordChoice[i] == letter) {
+            correctLetter = true;            
         }
     }
 
-    if(isLetterInWord) {
+    if(correctLetter) {
         for (var i = 0; i < numBlanks; i++) {
-            if(selectedWord[i] == letter) {
-                 correctLetterGuessed[i] = letter;
-                 alert("Survey says, DING!");
+            if(wordChoice[i] == letter) {
+                 correctLetterGuessed[i] = letter;                 
             }
         }
     }
     else {
         wrongLettersGuessed.push(letter);
-        guessesRemaining--;
-        alert("Survey says, ERR!");
+        guessesRemaining--;        
     }
 }
 
@@ -83,7 +78,7 @@ function gameEnd() {
 
     if (lettersinWord.toString() == correctLetterGuessed.toString()) {
         winCount++;
-        alert("You Won!");
+        alert("Winner, winner, chicken dinner!");
 
         document.getElementById("numWins").innerHTML = winCount;
 
@@ -91,7 +86,7 @@ function gameEnd() {
     }
     else if (guessesRemaining == 0) {
         lossCount++;
-        alert("You Lost!");
+        alert("You lost! Try again.");
 
         document.getElementById("numLosses").innerHTML = lossCount;
 
@@ -100,11 +95,13 @@ function gameEnd() {
 }
 
 gameStart();
-
+//Notes:
+//Need to figure out how to start game without inputting a key as guess
+//Need to figure out how to check if letter is already guessed and prevent it from being input twice
+//Need to figure out how to only check if letters A-Z is pressed
 document.onkeyup = function(event) {
     var letterGuessed = event.key;
     checkLetters(letterGuessed);
+    
     gameEnd();
-
-    console.log("letterGuessed");
 }
