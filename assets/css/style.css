@@ -5,10 +5,19 @@
 body {
     background-image: url("../images/background.png");
 }
-
+.jumbotron {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
 .card {
     opacity: .8;
     margin: 10px auto;
     padding: 10px;
     position: absolute;
+}
+
+#header {
+    font-size: 80px;
+    font-weight: 600;
 }
